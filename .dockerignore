@@ -1,0 +1,10 @@
+# Ignore everything
+**
+
+# Allow files and directories
+!GaussianProcess.ipynb
+!gp_utils.py
+!rise.css
+!README.md
+!environment.yml
+
