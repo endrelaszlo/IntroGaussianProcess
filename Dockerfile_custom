@@ -33,11 +33,10 @@ ENV PATH "/opt/conda/envs/${CONDA_ENV_NAME}/bin:${PATH}"
 #ENTRYPOINT ["source /opt/conda/bin/activate trendfinder"]
 #CMD ["/docker-entrypoint.sh"]
 
-#EXPOSE map[8888/tcp:{}]
-EXPOSE 8888/tcp
+EXPOSE 9999/tcp
 
 WORKDIR /src
 ENTRYPOINT [ "tini", "--" ]
 #CMD [ "/bin/bash" ]
-CMD ["bash", "-c","conda run --no-capture-output -n $CONDA_ENV_NAME jupyter nbextension enable --py widgetsnbextension && conda run --no-capture-output -n $CONDA_ENV_NAME jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root"]
+CMD ["bash", "-c","conda run --no-capture-output -n $CONDA_ENV_NAME jupyter nbextension enable --py widgetsnbextension && conda run --no-capture-output -n $CONDA_ENV_NAME jupyter notebook --port=9999 --no-browser --ip=0.0.0.0 --allow-root"]
 
