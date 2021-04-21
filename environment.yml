@@ -3,18 +3,19 @@ channels:
   - defaults
   # - conda-forge
 dependencies:
-  - python=3.8
-  - jupyterlab>=0.35.3
-  - ipykernel>=5.0.1
-  - matplotlib>=3.0.1
-  - pandas>=0.23.4
-  - scipy>=1.1.0
-  - scikit-learn>=0.21.3
-  - mkl>=2019.1
-  - numpy>=1.15.4
+  - python=3.8.8
+  - jupyterlab=2.2.3
+  - ipykernel=5.3.4
+  - matplotlib=3.3.4
+  - pandas=1.2.3
+  - scipy=1.6.1
+  - scikit-learn=0.24.1
+  - mkl=2019.4
+  - numpy=1.19.2
   # - conda-forge::jupyter-dash
   # - flask-compress
-  - plotly
-  - tqdm
-  - rise
-  - ipywidgets
+  - plotly=4.14.3
+  - tqdm=4.56.0
+  - rise=5.7.1
+  - ipywidgets=7.6.3
+
