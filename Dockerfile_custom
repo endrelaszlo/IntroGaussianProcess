@@ -1,0 +1,43 @@
+FROM continuumio/miniconda3
+
+RUN apt-get update && apt-get install -y \
+    tini \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN conda update conda
+RUN conda update --all
+COPY . /src
+#COPY environment.yml /environment.yml
+# Update Python environment based on environment.yml (if present)
+# RUN conda env update -f /src/environment.yml
+RUN conda env create -f /src/environment.yml
+
+RUN conda clean -afy && \
+    conda init bash
+
+#ENV TINI_VERSION v0.16.1
+#ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /usr/bin/tini
+#RUN chmod +x /usr/bin/tini
+#
+#ENTRYPOINT [ "/usr/bin/tini", "--" ]
+#CMD [ "/bin/bash" ]
+
+# Pull the environment name out of the environment.yml
+#ARG CONDA_ENV_NAME="$(head -1 /src/environment.yml | cut -d' ' -f2)"
+ARG CONDA_ENV_NAME=gp
+ENV CONDA_ENV_NAME="$CONDA_ENV_NAME"
+RUN echo $CONDA_ENV_NAME
+#RUN echo "source activate $CONDA_ENV_NAME" > ~/.bashrc
+ENV PATH "/opt/conda/envs/${CONDA_ENV_NAME}/bin:${PATH}"
+
+#ENTRYPOINT ["source /opt/conda/bin/activate trendfinder"]
+#CMD ["/docker-entrypoint.sh"]
+
+#EXPOSE map[8888/tcp:{}]
+EXPOSE 8888/tcp
+
+WORKDIR /src
+ENTRYPOINT [ "tini", "--" ]
+#CMD [ "/bin/bash" ]
+CMD ["bash", "-c","conda run --no-capture-output -n $CONDA_ENV_NAME jupyter nbextension enable --py widgetsnbextension && conda run --no-capture-output -n $CONDA_ENV_NAME jupyter notebook --port=8888 --no-browser --ip=0.0.0.0 --allow-root"]
+
